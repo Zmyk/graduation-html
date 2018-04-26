@@ -3,8 +3,8 @@ html,body {
     margin:0px;
     width:100%;
     height:100%;
+    background-color: #f2f2f2;
 }
-
 .virtual_body {
     width:100%;
     height: 450px;
@@ -19,7 +19,6 @@ html,body {
     z-index:2008;
     bottom:auto;
     width:100%;
-    height:60px;
 }
 
 a:link
@@ -39,11 +38,7 @@ a:active
     text-decoration: none;
 }
 
-html 
-{ 
-    overflow-x:hidden;
-    overflow-y:hidden; 
-}
+
 
 .head-warp1
 {
@@ -55,7 +50,7 @@ html
 {
     margin-top: 15px;
     height: 45px;
-    background: #FFFFFF;
+    background: #f2f2f2;
 }
 
 .div1
@@ -108,28 +103,13 @@ html
 .mybtn
 {
     background: #11CD6E;
+    border: none;
 }
 .li
 {
     width: 100px;
 }
 
-a:link
-{
-    text-decoration: none;
-}
-a:visited
-{
-    text-decoration: none;
-}
-a:hover
-{
-    text-decoration: none;
-}
-a:active
-{
-    text-decoration: none;
-}
 
 .image-good
 {
@@ -142,8 +122,7 @@ a:active
     height: 250px;
 }
 
-.image-good-div
-{
+.mt15 {
     margin-top: 15px;
 }
 .leibie
@@ -169,4 +148,24 @@ a:active
 .lunbotu
 {
     width: 640px;
+}
+
+.good-div
+{
+    float: left;
+    width: 210px;
+    height: 250px;
+}
+.width-half
+{
+    width: 40%;
+}
+.float-left
+{
+    float: left;
+    display: inline;
+}
+.mybtn:hover
+{
+     background: #11CD6E;
 }

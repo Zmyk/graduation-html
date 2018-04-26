@@ -1,0 +1,39 @@
+
+
+.ih-item{           
+    position: relative;
+    width: 100px;
+    height: 100px;
+    } 
+
+
+
+.ih-item .img img{
+    width: 100px;
+    height: 100px;
+    } 
+
+
+
+
+
+.ih-item .info {
+position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    -webkit-backface-visibility: hidden;/* 隐藏旋转元素的背面*/
+    backface-visibility: hidden;
+    background: rgba(0, 0, 0, 0.6);   /*后面这个0.6是指的背景的透明度*/
+    opacity: 0;
+    -webkit-transition: all 0.35s ease-in-out;   /*规定提示信息怎样出现ease-in-out以慢速度开始和结束*/
+    -moz-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+}
+
+
+.ih-item .a:hover .info {
+    opacity: 1;    /*有opacity有0变成1*/            
+}

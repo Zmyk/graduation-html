@@ -1,0 +1,281 @@
+<html>
+<head>
+    <script type="text/javascript" src="./static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./static/css/publishcss.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>发布-大学生二手交易网</title>
+</head>
+
+
+<body class="overflowset">
+    <div class="fixed_div">
+        <div id="head_warp1" class="row head-warp1">
+            <div class="col-1"></div>
+            <div class="col-2 div1">校园二手</div>
+            <div class="col-1">
+                <div class="row div2">信大二手网</div>
+                <div class="row div3">www.taobao.com</div>
+            </div>
+            <div class="col-5 div4">
+                <ul class="nav nav-tabs rmline navbar-static-top">
+                    <li role="presentation" class="li">
+                        <a class="navfont" href="#">首页</a>
+                    </li>
+                    <li role="presentation" class="li">
+                        <a class="navfont" href="http://www.taobao.com">爱淘宝</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="state_div2" class="col-2 div4">
+                <a href="#" class="navfont">用户1186</a>
+                <a class="btn btn-success mybtn" href="javascript:void(0)" onclick="cancel()">退出</a>
+            </div>
+        </div>
+    </div>
+    <div id="main" class="row">
+        <h2 class="col-12">发布二货</h2>
+        <div id="upload" class="col-12">
+            <div class="mt30">
+                <div id="localImg"></div>
+                <div id="add-div">
+                    <a class="a-upload" id="imgFileContainer">
+                        <input type="file" name="file" multiple="multiple" id="fileObj" accept="image/*" 
+                        onchange="showImage(this.files);"/>
+                        <img class="add-image" src="./static/images/add.png"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 mt30">
+                <div class="text-align-left">
+                    <label class="title">商品名称*</label><input type="text" id="good_name" name="good_name" class="text"/>
+                </div>
+                <div class="text-align-left mb10">
+                    <label class="title">商品详情*</label>
+                    <textarea rows="3" id="good_desc" name="good_desc" class="form-control"></textarea>
+                </div>
+                <div class="text-align-left">
+                    <label class="title">商品价格*</label><input type="number" id="good_price1" name="good_price1" class="text"/>元
+                    <label class="title price_label_right">商品原价*</label><input type="number" id="good_price2" name="good_price2" class="text"/>元
+                </div>
+                <div class="text-align-left">
+                    <label class="title">商品分类*</label>
+                    <select id="good_type" name="good_type" class="select">
+                        <option>1</option>
+                        <option>2</option>
+                    </select>
+                </div>
+                <div class="text-align-left">
+                    <label class="title">交易地址*</label><input type="text" id="addr" name="addr" class="longtext"/>
+                </div>
+                <div class="text-align-left">
+                    <label class="title">手机号码*</label><input type="number" id="phone" name="phone" class="text"/>
+                    <label class="title QQ_label_right">QQ号码*</label><input type="number" id="qq" name="qq" class="text"/>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-success" onclick="publish()">确认发布</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    var sum = 0;//图片数量
+    var i = 0;//拼接file控件id
+    var k = 0;//拼接img控件id
+    var tempFormdata = new FormData();
+    var imgFileContainer = document.getElementById("imgFileContainer");
+
+
+    window.onload = function(){
+        $.ajax({
+            type : "POST",
+            data : {},
+            dataType: "json",  
+            url : "http://localhost:8080/ssm_graduation/session/getLoginUser.action",
+            success : function(data) {
+                if(data.state=='false'){
+                    window.location.href="./login.html?goal=publish.html";
+                }
+            },
+            error : function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("in error");
+            },
+            complete : function() {
+
+            }
+        });
+    }
+
+    function cancel(){
+        $.ajax({
+            type : "POST",
+            data : {},
+            dataType: "json",  
+            url : "http://localhost:8080/ssm_graduation/session/deleteLoginUser.action",
+            success : function(data) {
+                if(data.state=='success'){
+                 window.location.href="./homepage.html";
+             }
+         },
+         error : function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("in error");
+        },
+        complete : function() {
+
+        }
+    });
+    }
+
+
+    function showImage(files) { 
+        var fileObj = document.getElementById("fileObj");
+        var div=document.getElementById('localImg');
+        if (fileObj.files && fileObj.files[0]) {
+            for(var j = 0;j < fileObj.files.length;j++){
+                if(sum<5){
+                    var imgNode_id = "preview" + k;
+                    var file = fileObj.files[j];
+                    tempFormdata.append(imgNode_id,file);
+                    var imgNode=document.createElement('img');
+                    imgNode.setAttribute("id",imgNode_id);
+                    imgNode.setAttribute("onclick","del(this)");
+                    imgNode.src = window.URL.createObjectURL(fileObj.files[j]);
+                    div.appendChild(imgNode);
+                    k++;
+                    sum++;
+                }
+                else{
+                    break;
+                }
+            }
+            fileObj.setAttribute("hidden","hidden");
+            fileObj.setAttribute("id","fileObj"+i);
+            if(sum<5){
+                var fileObj=document.createElement('input');
+                fileObj.setAttribute("type","file");
+                fileObj.setAttribute("name","file");
+                fileObj.setAttribute("multiple","multiple");
+                fileObj.setAttribute("id","fileObj");
+                fileObj.setAttribute("accept","image/*");
+                fileObj.setAttribute("onchange","showImage(this.files);");
+                imgFileContainer.appendChild(fileObj);
+            }
+            else{
+                imgFileContainer.setAttribute("hidden","hidden");
+            }
+        }
+        i++;
+        return true;
+    }
+
+    function check(formdata){
+        if(formdata.get('file')!=null && !isNull()){
+            return true;
+        }
+        else{
+            if(formdata.get('file')==null){
+                alert("请至少选择一张图片！");
+            }
+            else{
+                alert("*标选项必须填写完整！");
+            }
+            return false;
+        }
+    }
+    
+
+    function publish(){
+        var formdata = new FormData();
+        var good_name = $("#good_name").val();
+        var good_desc = $("#good_desc").val();
+        var price = $("#good_price1").val();
+        var origin_price = $("#good_price2").val();
+        var good_type = $("#good_type").val();
+        var addr = $("#addr").val();
+        var phone = $("#phone").val();
+        var qq = $("#qq").val();
+        for (var value of tempFormdata.values()) {
+            formdata.append("file",value);
+        }
+        formdata.append("good_name",good_name);
+        formdata.append("good_desc",good_desc);
+        formdata.append("price",price);
+        formdata.append("origin_price",origin_price);
+        formdata.append("good_type",good_type);
+        formdata.append("addr",addr);
+        formdata.append("phone",phone);
+        formdata.append("qq",qq);
+        if(check(formdata) && isPhoneNum()){
+            $.ajax({ 
+                 async: false,//要求同步 不是不需看你的需求
+                 url : "http://localhost:8080/ssm_graduation/good/publish.action",  
+                 type : "POST",  
+                 data : formdata,  
+                 processData : false,  //必须false才会避开jQuery对 formdata 的默认处理   
+                 contentType : false,  //必须false才会自动加上正确的Content-Type 
+                 success : function(result) {  
+                    alert(result.state);
+                },  
+                error : function(result) {  
+                    alert("in error!");
+                }  
+            });
+        }  
+    }
+
+    function isNull(){
+        var good_name = $("#good_name").val();
+        var good_desc = $("#good_desc").val();
+        var price = $("#good_price1").val();
+        var origin_price = $("#good_price2").val();
+        var good_type = $("#good_type").val();
+        var addr = $("#addr").val();
+        var phone = $("#phone").val();
+        var qq = $("#qq").val();
+        // alert(good_name);
+        // alert(good_desc);
+        // alert(price);
+        // alert(origin_price);
+        // alert(good_type);
+        // alert(addr);
+        // alert(phone);
+        return good_name==null || good_name == '' || good_name == undefined || good_desc ==null || good_desc == '' || good_desc == undefined || price == null || price == '' || price == undefined || origin_price == null ||origin_price == '' || origin_price == undefined || good_type==null || good_type == '' || good_type == undefined || addr==null || addr == '' || addr == undefined || qq==null || qq == '' || qq == undefined;
+    }
+
+    function del(obj){
+        tempFormdata.delete(obj.id);
+        obj.parentNode.removeChild(obj);
+        sum--;
+        imgFileContainer.removeAttribute("hidden");
+        var isExist = document.getElementById("fileObj");
+        if(!isExist){
+            var fileObj=document.createElement('input');
+            fileObj.setAttribute("type","file");
+            fileObj.setAttribute("name","file");
+            fileObj.setAttribute("multiple","multiple");
+            fileObj.setAttribute("id","fileObj");
+            fileObj.setAttribute("accept","image/*");
+            fileObj.setAttribute("onchange","showImage(this.files);");
+            imgFileContainer.appendChild(fileObj);
+        }
+        
+    }
+
+    function isPhoneNum(){
+    var phone = $("#phone").val();
+    var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+    if(!myreg.test(phone)){ 
+        alert("错误的手机号码！");
+        return false; 
+    }else{
+        return true;
+    }
+}
+    
+</script>

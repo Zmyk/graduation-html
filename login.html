@@ -1,16 +1,16 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>注册-大学生二手交易网</title>
+	<title>登录-大学生二手交易网</title>
 	<script type="text/javascript" src="./static/js/jquery.min.js"></script>
 	<script type="text/javascript" src="./static/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="./static/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css"
-	href="./static/css/registercss.css" />
+	<link rel="stylesheet" type="text/css" href="./static/css/registercss.css" />
+	<link rel="stylesheet" type="text/css" href="./static/css/mycss.css">
 </head>
 <body>
 	<div class="row up-div">
-		<h1 class="myh font h">校园二手网</h1>
+		<h1 class="myh font h"><a class="font" href="./homepage.html">校园二手网</a></h1>
 	</div>
 	<div class="registerMain-div">
 		<div>
@@ -25,11 +25,67 @@
 			placeholder="请输入密码" autocomplete="off" class="input">
 		</div>
 		<div>
-			<button class="btn btn-success mybtn">登录</button>
+			<button class="btn btn-success mybtn" onclick="login()">登录</button>
 		</div>
 		<div>
-			<a class="btn btn-success mybtn" href="http://localhost:8080/ssm_graduation/user/list.action">注册</a>
+			<a class="btn btn-success mybtn" href="./register.html">注册</a>
 		</div>
 	</div>
 </body>
 </html>
+<script type="text/javascript">
+
+  function login(){
+  	var phoneNumber = $("#phoneNumber").val();
+  	var password = $("#password").val();
+  	var url = window.location.search;
+  	var theRequest = new Object();
+  	if(url.indexOf("?")!=-1){
+  		var str = url.substr(1);
+  		var strs = str.split("&");
+  		for(var i = 0;i<strs.length;i++){
+  			theRequest[strs[i].split("=")[0]] = strs[i].split("=")[1];
+  		}
+  	}
+  	else
+  	{
+  		theRequest['goal'] = "homepage.html";
+  	}
+  	if(!isNull()){
+  		$.ajax({
+  			type : "POST",
+  			data : {
+  				"phoneNumber" : phoneNumber,
+  				"password" : password
+  			},
+  			dataType: "json",  
+  			url : "http://localhost:8080/ssm_graduation/user/login.action",
+  			success : function(data) {
+  				if(data.state=='success'){
+  					window.location.href="./"+theRequest['goal'];
+  				}
+  				else{
+  					alert("登陆失败！");
+  				}
+  			},
+  			error : function(XMLHttpRequest, textStatus, errorThrown) {
+  				alert("in error");
+  			},
+  			complete : function() {
+
+  			}
+  		});
+  	}
+  	else{
+  		alert("请检查信息是否填写完整！");
+  	}
+
+  }
+
+  function isNull(){
+  	var phoneNumber = $("#phoneNumber").val();
+  	var password = $("#password").val();
+  	return phoneNumber==null || phoneNumber == '' || phoneNumber == undefined || password ==null || password == '' || password == undefined;
+  }
+
+</script>

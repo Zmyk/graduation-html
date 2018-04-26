@@ -1,0 +1,281 @@
+
+/*head-warp1*/
+html,body {
+    overflow:hidden;
+    margin:0px;
+    width:100%;
+    height:100%;
+    background-color: #f2f2f2;
+}
+
+.fixed_div {
+    position:absolute;
+    z-index:2008;
+    bottom:auto;
+    width:100%;
+}
+
+a:link
+{
+    text-decoration: none;
+}
+a:visited
+{
+    text-decoration: none;
+}
+a:hover
+{
+    text-decoration: none;
+}
+a:active
+{
+    text-decoration: none;
+}
+
+
+.head-warp1
+{
+    height: 60px;
+    background: #11CD6E;
+}
+
+
+.float-left
+{
+    float: left;
+    display: inline;
+}
+.div1
+{
+    height: 60px;
+    line-height: 60px;
+    font-size: 40px;
+    color: #FFFFFF;
+    text-align: center;
+}
+.div2
+{
+    line-height: 20px;
+    margin-top: 10px;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+.div3
+{
+    line-height: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #FFFFFF;
+}
+.div4
+{
+    height: 60px;
+    font-size: 25px;
+    color: #FFFFFF;
+    line-height:60px;
+    text-align: center;
+}
+.a{
+
+    font-size: 25px;
+    color: #FFFFFF;
+}
+
+.navfont
+{
+    font-size: 21px;
+    color: #FFFFFF;
+}
+.li
+{
+    width: 100px;
+}
+.mybtn
+{
+    background: #11CD6E;
+    border: none;
+}
+.mybtn:hover
+{
+     background: #11CD6E;
+}
+
+/*main*/
+.overflowset
+{
+    overflow-y:scroll;
+    overflow-x:auto;
+}
+#main
+{
+    text-align: center;
+    background-color: #fff;
+    line-height: 50px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-bottom: #e5e5e5 solid 1px;
+    border-right: #e5e5e5 solid 1px;
+    margin-top: 60px;
+    width: 80%;
+    margin-left: 10%;
+    background-color: #f2f2f2;
+}
+
+h2
+{
+    text-align: center;
+    line-height: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border-bottom: #e5e5e5 solid 1px;
+    border-right: #e5e5e5 solid 1px;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 400;
+}
+#upload
+{
+    background-color: #ffffff;
+}
+
+/*上传图片部分*/
+img
+{
+    margin-left: 2px;
+    border-style: solid;
+    border-color:  #11CD6E;
+    border-width: 2px;
+    width: 100px;
+    height: 100px;
+}
+#file_input{    
+    display: none;    
+}    
+
+.textalign
+{
+    text-align: center;
+}
+
+h1
+{
+    color: #11cd6e !important;
+}
+
+
+.a-upload {
+    padding: 0;
+    line-height: 100px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #f2f2f2;
+    display: inline-block;
+}
+
+.a-upload  #fileObj {
+    position: absolute;
+    right: 0px;
+    top : 0px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none;
+}
+.div-inline
+{
+    display: inline !important;
+}
+.add-image
+{
+    z-index: 0;
+}
+#fileObj
+{
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+}
+#localImg
+{
+    display: inline;
+}
+#add-div
+{
+    display: inline;
+}
+#yyy
+{
+    display: inline;
+}
+.clear
+{ 
+    clear:both;
+}
+
+
+/**/
+.mt30
+{
+    margin-top: 30px;
+}
+.mb10
+{
+    margin-bottom: 10px;
+}
+.title
+{   font-size: 15px;
+    width: 150px;
+    line-height: 50px;
+    border: 1px solid #e6e6e6;
+    border-radius: 2px 0 0 2px;
+    text-align: center;
+    background-color: #FBFBFB;
+    white-space: nowrap;/*不换行*/
+    text-overflow: ellipsis;/*超出部分省略号*/
+}
+.text
+{
+    margin-left: 5px;
+    height: 50px;
+    border: 1px solid #ced4da;
+}
+.longtext
+{
+    width: 400px;
+    margin-left: 5px;
+    height: 50px;
+    border: 1px solid #ced4da;
+}
+.textarea
+{
+    width:100%;
+    height: 50px;
+}
+.text-align-left
+{
+    text-align: left;
+}
+.price_label_right
+{
+    margin-left: 90px;
+}
+.QQ_label_right
+{
+    margin-left: 105px;
+}
+.select
+{
+    width: 192px;
+    height: 50px;
+    border: 1px solid #ced4da;
+}

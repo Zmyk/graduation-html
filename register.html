@@ -1,15 +1,56 @@
 <html>
 <head>
 	<title>注册-大学生二手交易网</title>
-	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="./static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="./static/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./static/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./static/css/registercss.css" />
+	<link rel="stylesheet" type="text/css" href="./static/css/mycss.css">
 </head>
 <body>
 
+	<div id="login_success" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">提示</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					注册成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="goBack()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="send_success" class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">提示</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					验证码发送成功，请注意查收！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="row up-div">
-		<h1 class="myh font h">校园二手网</h1>
+		<h1 class="myh font h"><a class="font" href="./homepage.html">校园二手网</a></h1>
 	</div>
 	<div class="registerMain-div">
 		<div>
@@ -36,13 +77,54 @@
 			<button type="submit" class="btn btn-success mybtn" onclick="register()">注册</button>
 		</div>
 		<div class="row">
-			<a class="btn btn-success mybtn" href="http://localhost:8080/ssm_graduation/skip/login.action">返回登录</a>
+			<a class="btn btn-success mybtn" href="./login.html">返回登录</a>
 		</div>
 	</div>
 </body>
 </html>
 
 <script language="JavaScript">
+
+	function goBack(){
+		window.location.href = "./login.html";
+	}
+
+	function register(){
+		var phoneNumber = $("#phoneNumber").val();
+		var password = $("#password").val();
+		var repassword = $("#repassword").val();
+		var checkCode = $("#checkCode").val();
+		if(isPasswordAndRepassword()&&!isNull()){
+			$.ajax({
+				type : "POST",
+				data : {
+					"phoneNumber" : phoneNumber,
+					"password" : password,
+					"checkCode" : checkCode
+				},
+				dataType: "json",  
+				url : "http://localhost:8080/ssm_graduation/user/register.action",
+				success : function(data) {
+					if(data.state=='success'){
+						$('#login_success').modal('show');
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("in error");
+				},
+				complete : function() {
+					
+				}
+			});
+		}
+		else{
+			if(isNull()){
+				alert("请检查信息是否填写完整~");
+			}
+			else
+				alert("两次密码不一致！请检查~");
+		}
+	}
 
 	function startCountDown() {
 		$('#myButton').text(60)
@@ -59,40 +141,65 @@
 
 //获取验证码
 function getCheckCode() {
+	var phoneNumber = $("#phoneNumber").val();
+	var password = $("#password").val();
+	var repassword = $("#repassword").val();
+	var checkCode = $("#checkCode").val();
 	if(isPhoneNum()){
 		startCountDown();
-		var phoneNumber = $("#phoneNumber").val();
 		$.ajax({
 			type : "POST",
 			data : {
 				"phoneNumber" : phoneNumber
 			},
 			dataType: "json",  
-			url : "http://localhost:8080/ssm_graduation/register/getCheckCode.action",
+			url : "http://localhost:8080/ssm_graduation/checkCode/getCheckCode.action",
 			success : function(data) {
-				alert(data.state);
+				if(data.state=='success'){
+					$('#send_success').modal('show');
+				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				alert("in error");
 			},
 			complete : function() {
-				alert("in complete");
+				
 			}
 		});
 	}
 	else{
-		alert('请输入有效的手机号码！'); 
+		alert('请输入有效的手机号码！');
 	}
 }
 
 //验证手机号码格式
 function isPhoneNum(){
-	var phonenum = $("#phoneNumber").val();
+	var phoneNumber = $("#phoneNumber").val();
+	var password = $("#password").val();
+	var repassword = $("#repassword").val();
+	var checkCode = $("#checkCode").val();
 	var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
-	if(!myreg.test(phonenum)){ 
+	if(!myreg.test(phoneNumber)){ 
 		return false; 
 	}else{
 		return true;
 	}
 }
+
+function isPasswordAndRepassword(){
+	var phoneNumber = $("#phoneNumber").val();
+	var password = $("#password").val();
+	var repassword = $("#repassword").val();
+	var checkCode = $("#checkCode").val();
+	return password===repassword;
+}
+
+function isNull(){
+	var phoneNumber = $("#phoneNumber").val();
+	var password = $("#password").val();
+	var repassword = $("#repassword").val();
+	var checkCode = $("#checkCode").val();
+	return phoneNumber==null || phoneNumber == '' || phoneNumber == undefined || password ==null || password == '' || password == undefined || repassword == null || repassword == '' || repassword == undefined || checkCode == null ||checkCode == '' || checkCode == undefined;
+}
+
 </script>
